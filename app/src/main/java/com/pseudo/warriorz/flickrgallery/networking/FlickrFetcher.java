@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.pseudo.warriorz.flickrgallery.model.Photo;
 import com.pseudo.warriorz.flickrgallery.model.Response;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;

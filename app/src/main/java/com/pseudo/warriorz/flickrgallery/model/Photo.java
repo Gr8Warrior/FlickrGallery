@@ -90,4 +90,11 @@ public class Photo {
     public void setIsfamily(int isfamily) {
         this.isfamily = isfamily;
     }
+
+    private String url;
+
+    public String getUrl() {
+        return "http://farm"+this.getFarm()+".staticflickr.com/"+this.server+"/"+this.getId()+"_"+this.getSecret()+".jpg";
+    }
+
 }
