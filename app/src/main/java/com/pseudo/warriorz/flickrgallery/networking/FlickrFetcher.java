@@ -3,12 +3,17 @@ package com.pseudo.warriorz.flickrgallery.networking;
 import android.net.Uri;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.pseudo.warriorz.flickrgallery.model.Photo;
+import com.pseudo.warriorz.flickrgallery.model.Response;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 /**
  * @author Shailendra Suriyal
@@ -18,7 +23,7 @@ public class FlickrFetcher {
 
     private static final String TAG = "FlickrFetchr";
 
-    private static final String API_KEY = "1e074c4df6b35973f66a5d03455f893b";
+    private static final String API_KEY = "xxx";
 
     public byte[] getUrlBytes(String urlSpec) throws IOException {
         URL url = new URL(urlSpec);
@@ -50,7 +55,8 @@ public class FlickrFetcher {
         return new String(getUrlBytes(urlSpec));
     }
 
-    public void fetchItems() {
+    public List<Photo> fetchItems() {
+        Response p = null;
         try {
             String url = Uri.parse("https://api.flickr.com/services/rest/")
                     .buildUpon()
@@ -61,10 +67,13 @@ public class FlickrFetcher {
                     .appendQueryParameter("extras", "url_s")
                     .build().toString();
             String jsonString = getUrlString(url);
-            Log.i(TAG, "Received JSON: " + jsonString);
+            Gson g = new Gson();
+            p = g.fromJson(jsonString, Response.class);
+            Log.i(TAG, "fetchItems: "+p.getPhotos().getPhoto().size());
         } catch (IOException ioe) {
             Log.e(TAG, "Failed to fetch items", ioe);
         }
+        return p.getPhotos().getPhoto();
     }
 
 }
